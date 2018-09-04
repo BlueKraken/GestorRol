@@ -146,7 +146,7 @@ Se pueden ingresar carácteres en el buscador para invocar otras funcionalidades
 * `:` Invoca el comando "Ir a línea"
 * `?` Invoca la paleta de comandos de ayuda 
 
-#### Otros
+#### Otros Comandos
 
 | Atajo | Nombre | Descripción |
 | --- | --- | --- |
@@ -171,7 +171,7 @@ Adicionalmente, VSCode integra comandos de manejo de pestañas de Google Chrome 
 * `Ctrl` + `W`
 * `Ctrl` + `Shift`  + `T` 
 
-##### Otros
+##### Tips
 Si se corta sin una selección (`Ctrl` + `X`), la línea entera será cortada. Esto es verdadero también para el comando copiar (`Ctrl` + `C`)
 
 Se puede subir o bajar una línea, o una selección, manteniendo presionado `Alt` y la flecha hacia attiba o abajo.
