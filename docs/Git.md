@@ -13,6 +13,7 @@ Un repositorio git es definido por un directorio que contiene una carpeta escond
 ###Herramientas gráficas
 
 ###Gitk
+
 Herramienta invocable desde la línea de comandos si se encuentra en un directorio con un repositorio git.
 
     gitk --all
