@@ -1,79 +1,208 @@
-#Trabajando con git
+#Guías y comentario sobre el flujo de trabajo
+
+##Contenidos
+WIP
+
+##Trabajando con git
 [Sitio oficial](https://git-scm.com)
 
 [Descarga](https://git-scm.com/download/win)
 
 [Introducción por GitHub](https://guides.github.com/introduction/flow/)
 
-##Resumen
+###Resumen
 Git es una mesa de trabajo que proporciona herramientas para controlar las versiones y el flujo de trabajo de un repositorio. LLamamos repositorio a un contenedor de archivos que una organización mantiene y actualiza para entregarle valor a este.
 
 Un repositorio git es definido por un directorio que contiene una carpeta escondida llamada `.git`. Esta carpeta es creada al llamar al comando `git init`.
 
 ###Herramientas gráficas
 
-###Gitk
+####Gitk
 Herramienta invocable desde la línea de comandos si se encuentra en un directorio con un repositorio git.
 
     gitk --all
 
 Es perfecta mara visualizar cambios y explorar las versiones realizadas. Contiene exactamente lo que un usuario convencional necesita
 
-###GitKraken
+####GitKraken
 Herramienta "*full featured*" de manejo de repositorios. Es muy poderosa, pero si no se tiene la expertise, es mejor usarla sólo para visualizar y arreglar detalles, y utilizar las herramientas de VSCode para crear ramas y realizar commits.
 
 [Descarga GitKraken](https://www.gitkraken.com/download)
 
-##Conceptos
+###Conceptos
 A continuación se introducen los conceptos principales de Git, es esperable que de primera no se entienda exactamente a lo que se refiere cada concepto, ni como se ve. Pero utilizando las herramientas de visualización, además de VSCode para crear ramas y realizar commits (que equivale al 90% de lo que se hace en git) se hace mucho más facil familiarizarse con la herramienta.
 
-
-
-###Commits (Hechos)
+####Commits (Hechos)
 > Es difícil traducir el concepto commit al español en este contexto, ya que literalmente significa 'cometer', pero hace referencia a cometer un hecho, o un cambio. Por esto hablaremos de commits.
 
 Un commit es un hecho dentro de una rama, contiene la descripción de la **diferencia** de la rama antes y después de este commit. Esto deja en claro cuáles son los archivos que se modificaron, y cómo (que líneas de código se agregaron y eliminaron)
 
 Cada commit debe ir acompañado de un mensaje que contenga la descripción de los cambios hechos, en general se utiliza para persistir el "flujo de pensamiento" en el flujo de trabajo, así no olvidamos qué hicimos y porqué
 
-####Stage Changes
+#####Stage Changes
 Para realizar un commit, se requiere agregar los cambios al futuro commit. Para esto se utiliza el comando `git add <nombre de archivo>`, pero se puede realizar desde la herramienta gráfica de VSCode que se explicará más adelante
 
-###Branches (Ramas)
+####Branches (Ramas)
 Una rama es una línea de tiempo dentro de la historia del proyecto. En general se usan ramas para determinar flujos de trabajos específicos. Cada repositorio es inicializado con una rama llamada `master` y un commit llamado `initial commit`, que contiene la inicialización del repositorio.
 
 En general se usa master para publicar cambios en producción, por lo que se agregan ramas con nombres como 'Dev', 'New-feature', 'user-authentication', 'testing', etc. Para mantener el trabajo organizado 
 
-###Checkout
+####Checkout
 Podemos cambiar la rama en la que nos encontramos trabajando cuando lo estimemos conveniente, por lo que podemos iniciar el desarrollo de una característica antes de terminar otra que se encuentre en proceso. Esto se logra utilizando el comando `git checkout` con el cual podemos definir que la rama a la que *saldremos* es una nueva. Es importante controlar desde que rama vamos a ramificar un nuevo flujo de trabajo, por ejemplo: Si nos encontramos en la rama de la implementación de un componente y queremos trabajar en una nueva característica, es recomendable ramificar desde la rama principal de desarrollo, así, sin importar que característica terminemos primero, podemo realizar un *merge* a la rama principal de desarrollo sin problemas.
 
-####Merge
+#####Merge
 Cuando una rama termina con su objetivo (ej: el bug en el cual se trabajaba en una rama es corregido), se puede unir (*merge*) con otra rama, en general su rama base. Git se preocupa de que se apliquen los cambios en la rama base, y si hay problemas de unión, hay herramientas para selecionar que cambios realizar en las partes con conflictos
 
-###Guía de git con VSCODE
+###Git + VSCode
 [Documentación oficial](https://code.visualstudio.com/docs/editor/versioncontrol)
+
+[Video rápido de uso básico (6:18)](https://www.youtube.com/watch?v=VOwyH2-VCVY)
 
 La pestaña de versión de control se puede acceder presionando el ícono del menú lateral que representa una ramificación, o presionando `Ctrl` + `Shift` + `G`.
 
 Todas las herramientas que ofrece esta pestaña pueden ser accedidos desde la paleta de comandos escribiendo
     >git:
 
-Para inicializar el repositorio en el directorio de trabajo sólo basta con abrir la paleta de comandos (`Ctrl` + `Shift` + `T`) y buscar el comando **Initialize repository**.
+####Inicializar un repositorio
+Abrir la paleta de comandos (`Ctrl` + `Shift` + `T`) y buscar el comando **Initialize repository**.
 
 Al costado inferior izquierdo se puede ver la rama actual de trabajo y si tiene cambios pendientes su nombre aparecerá acompañado de un asterisco.
 
+####Checkout branch
 Si presionamos el nombre de la rama podemos realizar un `checkout` a una rama existente, o crear una nueva.
 
+####Stage changes
 Para agregar los cambios de un archivo a un futuro commit, se puede seleccionar el ícono **+** que aparece al sobreponer el mouse sobre un archivo, o aplicar el comando `git stage changes`, con lo que se agregarán los cambios del archivo abierto.
 
+####Commit
 Para realizar un commit, se puede presionar el ticket sobre la pestaña de versión de control, o presionando `Ctrl` + `Enter`. El último caso funcionará sí y sólo sí ya se ha escrito un mensaje para el commit. 
+
+La primera línea del mensaje será el título o nombre del commit. Las siguientes líneas corresponderán a la descripción del commit.
 
 * Si no hay ningún cambio agregado, se preguntará si se quieren agregar todos los cambios al commit.
 * Si no hay mensaje escrito para el commit, se pedirá que lo escriba.
 
 El mensaje del commit se puede ir escribiendo a travez del tiempo para no perder el hilo de pensamiento de los cambios realizados. Aún así, se pueden observar los cambios hechos en cada archivo al presionarlo.
 
-###Formateo de mensajes de commits
+TODO: Definir estilo de mensajes de commit
+
+####Formateo de mensajes de commits
 [Sintaxis](https://confluence.atlassian.com/bitbucketserver/markdown-syntax-guide-776639995.html)
 
 [Preview](http://markdownlivepreview.com/)
+
+###Comandos de PowerShell
+Es útil conocer comandos de powershell que ayudan al flujo de trabajo
+
+####Moverse por el árbol de directorios:
+    cd <ruta>
+
+Ejemplos:
+
+    cd ../../miCarpeta
+    cd ./unDirectorio
+* '`.`' define el directorio en el que nos encontramos
+* '`..`' define un salto hacia arriba del directorio en el que nos encontramos
+
+####Crear un directorio
+    mkdir <nombre del directorio>
+> Se puede agregar un prefijo al nombre del directorio para no tener que navegar a la ruta deseada
+
+Ejemplo:
+
+    mkdir ./nuevaCaracteristica/modelos
+
+####Crear un archivo
+    New-Item <nombre del archivo>
+> Se puede agregar un prefijo al nombre del directorio para no tener que navegar a la ruta deseada
+> Es más conveniente usar el comando `code` para crear un archivo en memoria
+
+####Abrir VSCode
+    code <ruta>
+Ejemplo:
+
+    code .
+* Si la ruta apunta a un archivo:
+    * Si VSCode está abierto, el archivo se abrirá éste en la primera instancia de VSCode que PowerShell encuentre, en su defecto abre VSCode. 
+    * Si el archivo no existe, crea un archivo en memoria y lo abre con VSCode (útil para crear archivos en directorios específicos para trabajar inmediatamente en ellos)
+* Si es una carpeta, abre una nueva instancia de VSCode con la carpeta especificada
+
+Ejemplos:
+
+    code ./miProyecto
+    code ./webApp/componentes/miComponente.html
+
+##Comandos
+
+Documento oficial con todos los comandos de VSCode:
+[Keyboard shortcuts for windows](https://code.visualstudio.com/shortcuts/keyboard-shortcuts-windows.pdf)
+
+Los comandos que, en general, son más usados son (yo uso):
+
+####Paleta de comandos
+`Ctrl` + `Shift` + `P`   
+>Muestra la paleta completa de comandos de VSCode. Útil para navegar por comandos cuyo atajo olvidamos, o comandos que no poseen atajo.
+
+###Edición
+
+####Comentar o descomentar la líena especificada
+`Ctrl` + `Ç` 
+
+####Renombrar definición
+`F2` 
+>Renombra un símbolo (variable, clase, función, etc) en todos los archivos en los que se encuentren presente
+
+####Ir a definición
+`F12` 
+>Salta hacia el archivo donde está definido el símbolo seleccionado
+
+####Ver definición
+`Ctrl` + `F12` 
+>Muestra la definición del símbolo sin cambiar de archivo
+
+####Ir a línea
+`Ctrl` + `G` 
+
+####Buscar
+`Ctrl` + `F` 
+>Adicionalmente, se puede presionar F3 al seleccionar una palabra o expresión para iniciar su búsqueda
+
+####Reemplazar
+`Ctrl` + `H` 
+
+####Ir a siguiente concordancia (en búsqueda y reemplazo)
+`F3` 
+
+####Reemplazar todo
+`Ctrl` + `Alt` + `Enter` 
+ 
+###Navegación
+
+####Ir a archivo
+`Ctrl` + `P`    
+>Se puede mantener presionado `Ctrl` y presionar reiteradamente `P` para mover el cursor, cuando se suelta `Ctrl` el archivo con el cursor sobre él es abierto.
+Se pueden ingresar carácteres en el buscador para invocar otras funcionalidades:
+>
+* `>` Invoca la paleta de comandos
+* `:` Invoca el comando "Ir a línea"
+* `?` Invoca la paleta de comandos de ayuda 
+
+####Cambiar a archivo anterior
+`Ctrl` + `Tab` 
+
+####Cerrar archivo
+`Ctrl` + `W` 
+
+####Cancelar cerrar archivo
+`Ctrl` + `Shift`  + `T` 
+
+###Otros
+
+####Abrir o cerrar la terminal
+`Ctrl` + `Ñ` 
+
+####Mostrar opciones de usuario
+`Ctrl` + `,`
+
+####Guardar todo
+[`Ctrl` + `K`] + `S`
