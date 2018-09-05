@@ -1,5 +1,5 @@
 import { Inventory } from '../inventory/inventory.model';
-import { CharacterAttribute } from './characterAttribute.model';
+import { CharacterAttribute } from '../characterAttribute/characterAttribute.model';
 /** 
 * Representa un personaje del juego, sea 
 * controlado por un jugador, o no. 
