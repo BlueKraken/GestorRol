@@ -1,2 +1,6 @@
 # GestorRol
-hola
+TODO: REDACTAR
+a
+sdasda
+
+asd

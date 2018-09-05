@@ -1,0 +1,5 @@
+{
+  "scripts": {
+    "document": "typedoc --out .\\docs\\public . --target es5 --module commonjs"
+  }
+}

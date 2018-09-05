@@ -11,13 +11,13 @@ export class Gear {
    * FIXME: preguntar lol 
    * */
   public get WieldedWeapon() {
-    return this.Weapons.find(w => w.IsWielded);
+    return this.Weapons.filter(w => w.IsWielded)[0];
   }
   /** Escudos, pueden equiparse hasta 2 escudos */
   public Shields: Array<WieldableItem> = [];
   /** Escudo en mano */
   public get WieldedShield() {
-    return this.Shields.find(s => s.IsWielded);
+    return this.Shields.filter(s => s.IsWielded)[0];
   }
   /** Objeto equipado en cabeza */
   public Head: EquipableItem;
