@@ -1,181 +1,141 @@
-/** Representa la estructura de una bonificación base de  */
-class BaseBonification {
-  public get BaseValue() { return this.baseValue; }
-
-  constructor(private baseValue: number) { }
+interface DisplaysValue {
+  AttributeName: string;
+  ValueToString(): string;
 }
 
-/**
- * Representa un atributo que depende de una
- * condición, como bonificaciones por mano vacía.
- */
-class ConditionalBonification extends BaseBonification {
-  constructor(value:number) {
-    super(value);
-  }
-}
-
-/** Representa un atributo base de personaje */
-class BaseAttribute extends BaseBonification {
+abstract class CharacterAttribute implements DisplaysValue {
   public get AttributeName() { return this.name; }
-  public get TotalValue() {
-    return this.constantBonifications.reduce
-  }
-
-  public get
-  private constantBonifications: Array<BaseBonification>;
-  private temporalBonifications: Array<BaseBonification>;
-  private conditionalBonifications: Array<ConditionalBonification>;
-
-  constructor(value: number, private name: CharacterAttributeName) {
-    super(value);
-  }
-
-  /** Agrega una bonificación constante al atributo */
-  public AddConstantBonification(bonification: BaseBonification) {
-    this.constantBonifications.push(bonification);
-  }
-  /** Agrega una bonificación temporal al atributo */
-  public AddTemporalBonification(bonification: BaseBonification) {
-    this.temporalBonifications.push(bonification);
-  }
-  /** Agrega una bonificación por condición del atributo  */
-  public AddConditionalBonification(bonification: ConditionalBonification) {
-    this.conditionalBonifications.push(bonification);
-  }
-  /** Elimina una bonificación constante al atributo */
-  public RemoveConstantBonification(bonification: BaseBonification) {
-    this.constantBonifications.splice(
-      this.constantBonifications.indexOf(bonification), 1
-    );
-  }
-  /** Elimina una bonificación temporal al atributo */
-  public RemoveTemporalBonification(bonification: BaseBonification) {
-    this.temporalBonifications.splice(
-      this.temporalBonifications.indexOf(bonification), 1
-    );
-  }
-  /** Elimina una bonificación por condición del atributo  */
-  public RemoveConditionalBonification(bonification: ConditionalBonification) {
-    this.conditionalBonifications.splice(
-      this.conditionalBonifications.indexOf(bonification), 1
-    );
-  }
-    
-
+  constructor(private name: CharacterAttributeName) { }
+  public abstract ValueToString(): string
 }
 
-/** Atributo compuesto */
-class CompoundAttribute extends BaseAttribute {
-
-  public get Value() {
-
-  }
-
+class InformativeAttribute extends CharacterAttribute {
   constructor(
     name: CharacterAttributeName, 
-    private dependencies: Array<CharacterAttributeName>) {
-    super(0, name)
-  }
-
-}
-
-/** 
- * Representa un atributo del personaque que posee la 
- * capacidad de almacenar un atributo temporal mediante
- * talentos o empuñables y aumentar según una condición.
- */
-export class CharacterAttribute implements Bonification {
-  /** Nombre del atributo */
-  public Name: CharacterAttributeName;
-  /** Valor total */
-  public get Value(): number {
-    return this.baseValue 
-      + this.temporalValue
-      + this.extraBonification.Value;
-  }
-  /** Representación textual del atributo */
-  public ToString() {
-    const s = `+${this.baseValue +this.extraBonification.Value}`;
-    if(this.temporalValue != 0) {
-      s.concat(` (constante), +${this.temporalValue} (temporal)`);
-    }
-    return s;
-  }
-  /** Representación de la bonificación extra  */
-  private extraBonification: ExtraBonification;
-  /** Valor constante */
-  private baseValue: number;
-  /** Valor temporal */
-  private temporalValue: number;
-
-  constructor(baseValue: number,
-    temporalValue: number = 0,
-    extraBonification: ExtraBonification = undefined)
-  {
-    this.baseValue = baseValue;
-    this.temporalValue = temporalValue;
-    this.extraBonification = extraBonification;
-  }
-
-  /** 
-   * Compone un nuevo objeto CharacterAttribute 
-   * sumando los valores base y valores temporales
-   * de los atributos dados
-   */
-  public static ComposeAttributes(
-    ...attributes: Array<CharacterAttribute>
+    private value: string
   ) {
-    const baseValue = attributes
-      .map(a => a.baseValue)
-      .reduce((acc, curr) => acc += curr);
-
-    const temporalValue = attributes
-      .map(a => a.temporalValue)
-      .reduce((acc, curr) => acc += curr);
-
-    return new CharacterAttribute(baseValue, temporalValue);
+    super(name);
+  }
+  public ValueToString() {
+    return this.value;
   }
 }
 
-/** 
- * Representa la bonificación extra de un atributo según una condición
- * WIP
- */
-class ExtraBonification implements Bonification {
-  /** Valor de la bonificación extra */
-  public get Value(): number{
-    return this.valueByCondition();
+export class NumeralAttribute extends CharacterAttribute {
+  // Fixme: 
+  public get TotalValue() { 
+    return this.totalValue;
   }
-  /** Posibles valores de la bonificación */
-  private posibleValues: Array<number>;
-  /** Representación textual de la condición */
-  private conditionString: string;
-  public ToString() {
-    return `+${this.Value} ${this.conditionString}`;
+  protected totalValue: number;
+  protected bonifications: Array<AttributeBonification> = [];
+  
+  constructor(name: CharacterAttributeName, protected value: number) {
+    super(name);
+    this.totalValue = value;
   }
-  /** 
-   * Devuelve el valor, dentro de los posibles,
-   * según la condición de la bonificación. Si la
-   * condición no se cumple, devuelve 0.
-   */
-  private valueByCondition() {
-    const index = 0 // Some function should give the index
-    return this.posibleValues[index];
+  public AddBonification(bonification: AttributeBonification) {
+    this.bonifications.push(bonification);
+    this.calculateTotalValue();
   }
-  private conditionMet(): boolean {
-    return true;
+  public RemoveBonification(bonification: AttributeBonification) {
+    this.bonifications.splice(
+      this.bonifications.indexOf(bonification), 0
+    );
+    this.calculateTotalValue();
   }
-
+  public ValueToString() {
+    return `+${this.TotalValue}`;
+  }
+  protected calculateTotalValue() {
+    this.totalValue = this.value 
+      + this.calculateTotalBonificationValue();
+  }
+  private calculateTotalBonificationValue() {
+    return this.bonifications
+      .map( b => b.Value )
+      .reduce( (acc, curr) => acc += curr, 0 );
+  }
 }
 
-interface Bonification {
-  Value: number;
-  ToString(): string;
+class AttributeWithTemporalBonifications extends NumeralAttribute {
+  private temporalBonifications: Array<AttributeBonification> = [];
+  
+  constructor(name: CharacterAttributeName,value: number) {
+    super(name, value);
+  }
+  
+  public ValueToString() {
+    let valueToString = `+${this.TotalValue}`;
+    
+    if(this.temporalBonifications.length > 0) {
+      valueToString += '(constante), ' 
+      + `+${this.calculateTemporalsTotalValue()}`
+      + '(temporal)';
+    }
+    return valueToString; 
+  }
+  private calculateTemporalsTotalValue() {
+    return this.temporalBonifications
+      .map(t => t.Value)
+      .reduce((acc, curr) => acc += curr, 0);
+  }
+  public AddTemporalBonification(bonification: AttributeBonification) { }
+  public RemoveTemporalBonification(bonification: AttributeBonification) { }
 }
 
-// NO DEBERÍA USARLO
-// Basta con llamar a this.name en 
+/** pregunta: 
+ * cómo itero sobre todos los atributos filtrando
+ * si son compuesto?
+ * 
+ * Cómo identifico que un atributo es compuesto?
+ * 
+ * Si itero sobre todos los atributos del personaje
+ * y declaro el item actual como compuesto podría tener
+ * un runtime error??
+ * 
+ * Por su nombre?? sé que atributos son compuestos por definición.
+ * Podría hacer un mapa y determinar si un atributo es compuesto
+ * si su nombre se encuentra en dicho mapa 
+ */ 
+class CompoundAttribute extends NumeralAttribute {
+  // podría tener un accesor de las dependencias para poder
+  // determinar que atributos recalcular cuando se modifica
+  // X atributo
+  protected attributeDependencies: Array<CharacterAttributeName>;
+  
+  constructor(name: CharacterAttributeName) {
+    super(name, 0);
+  }
+}
+
+export class Stamina extends CompoundAttribute {
+  constructor() {
+    super("stamina");
+    this.attributeDependencies = ["intelligenceTests"];
+  }
+  
+  public ValueToString() {
+    return `+${this.value}`
+  }
+  public CalculateBaseValue(characterAttributes: Array<NumeralAttribute>) {
+    this.value = this.attributeDependencies
+      .map(name => characterAttributes
+        .find(attribute => attribute.AttributeName == name)
+        .TotalValue
+      )
+      .reduce((acc, curr) => acc += curr, 0);
+  }
+}
+
+export class AttributeBonification extends CharacterAttribute {
+  constructor(name: CharacterAttributeName, public readonly Value: number) {
+    super(name);
+  }
+  public ValueToString() {
+    return `+${this.Value}`;
+  }
+}
+
 type CharacterAttributeName = 
   'totalHealthPoints' |
   'healthPoints' |
@@ -202,3 +162,4 @@ type CharacterAttributeName =
   'clevernessAndDeduction' |
   'wisdomAndExperience' |
   'charismaEloquenceDiplomacy';
+  
