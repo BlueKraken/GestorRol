@@ -23,32 +23,25 @@ class InformativeAttribute extends CharacterAttribute {
 
 export class NumeralAttribute extends CharacterAttribute {
   // Fixme: 
-  public get TotalValue() { 
-    return this.totalValue;
+  public get TotalValue() {
+    return this.value 
+      + this.calculateTotalBonificationValue();
   }
-  protected totalValue: number;
   protected bonifications: Array<AttributeBonification> = [];
   
   constructor(name: CharacterAttributeName, protected value: number) {
     super(name);
-    this.totalValue = value;
   }
   public AddBonification(bonification: AttributeBonification) {
     this.bonifications.push(bonification);
-    this.calculateTotalValue();
   }
   public RemoveBonification(bonification: AttributeBonification) {
     this.bonifications.splice(
-      this.bonifications.indexOf(bonification), 0
-    );
-    this.calculateTotalValue();
+      this.bonifications.indexOf(bonification), 1
+    );    
   }
   public ValueToString() {
     return `+${this.TotalValue}`;
-  }
-  protected calculateTotalValue() {
-    this.totalValue = this.value 
-      + this.calculateTotalBonificationValue();
   }
   private calculateTotalBonificationValue() {
     return this.bonifications
@@ -115,7 +108,7 @@ export class Stamina extends CompoundAttribute {
   }
   
   public ValueToString() {
-    return `+${this.value}`
+    return `+${this.TotalValue}`
   }
   public CalculateBaseValue(characterAttributes: Array<NumeralAttribute>) {
     this.value = this.attributeDependencies
