@@ -1,5 +1,6 @@
 import { Inventory } from '../inventory/inventory.model';
 import { CharacterAttribute } from '../characterAttribute/characterAttribute.model';
+/** FixMe atributos no actualizados */
 /** 
 * Representa un personaje del juego, sea 
 * controlado por un jugador, o no. 
