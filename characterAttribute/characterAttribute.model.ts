@@ -10,10 +10,7 @@ abstract class CharacterAttribute implements DisplaysValue {
 }
 
 class InformativeAttribute extends CharacterAttribute {
-  constructor(
-    name: CharacterAttributeName, 
-    private value: string
-  ) {
+  constructor(name: CharacterAttributeName, private value: string) {
     super(name);
   }
   public ValueToString() {
@@ -25,10 +22,15 @@ export class NumeralAttribute extends CharacterAttribute {
   // Fixme: 
   public get TotalValue() {
     return this.value 
-      + this.calculateTotalBonificationValue();
+      + this.sumConstantBonifications()
+      + this.sumTemporalBonifications();
   }
-  protected bonifications: Array<AttributeBonification> = [];
-  
+  private get constantValue() {
+    return this.value + this.sumConstantBonifications();
+  }
+  private bonifications: Array<AttributeBonification> = [];
+  private temporalBonifications: Array<AttributeBonification> = [];
+
   constructor(name: CharacterAttributeName, protected value: number) {
     super(name);
   }
@@ -40,43 +42,37 @@ export class NumeralAttribute extends CharacterAttribute {
       this.bonifications.indexOf(bonification), 1
     );    
   }
-  public ValueToString() {
-    return `+${this.TotalValue}`;
+  public AddTemporalBonification(bonification: AttributeBonification) {
+    this.temporalBonifications.push(bonification)
   }
-  private calculateTotalBonificationValue() {
+  public RemoveTemporalBonification(bonification: AttributeBonification) {
+    this.temporalBonifications.splice(
+      this.temporalBonifications.indexOf(bonification), 1
+    );
+  }
+  public ValueToString() {
+    let constantValue = `+${this.constantValue}`;
+    let temporalValue = this.sumTemporalBonifications();
+
+    if (temporalValue > 0) {
+      constantValue += ` (constante), +${temporalValue} (temporal)`;
+    }
+
+    return constantValue;
+  }
+  private sumConstantBonifications() {
     return this.bonifications
+      .map( b => b.Value )
+      .reduce( (acc, curr) => acc += curr, 0 );
+  }
+  private sumTemporalBonifications() {
+    return this.temporalBonifications
       .map( b => b.Value )
       .reduce( (acc, curr) => acc += curr, 0 );
   }
 }
 
-class AttributeWithTemporalBonifications extends NumeralAttribute {
-  private temporalBonifications: Array<AttributeBonification> = [];
-  
-  constructor(name: CharacterAttributeName,value: number) {
-    super(name, value);
-  }
-  
-  public ValueToString() {
-    let valueToString = `+${this.TotalValue}`;
-    
-    if(this.temporalBonifications.length > 0) {
-      valueToString += '(constante), ' 
-      + `+${this.calculateTemporalsTotalValue()}`
-      + '(temporal)';
-    }
-    return valueToString; 
-  }
-  private calculateTemporalsTotalValue() {
-    return this.temporalBonifications
-      .map(t => t.Value)
-      .reduce((acc, curr) => acc += curr, 0);
-  }
-  public AddTemporalBonification(bonification: AttributeBonification) { }
-  public RemoveTemporalBonification(bonification: AttributeBonification) { }
-}
-
-/** pregunta: 
+/**
  * cómo itero sobre todos los atributos filtrando
  * si son compuesto?
  * 
@@ -88,9 +84,9 @@ class AttributeWithTemporalBonifications extends NumeralAttribute {
  * 
  * Por su nombre?? sé que atributos son compuestos por definición.
  * Podría hacer un mapa y determinar si un atributo es compuesto
- * si su nombre se encuentra en dicho mapa 
+ * si su nombre se encuentra en dicho mapa :eyes:
  */ 
-class CompoundAttribute extends NumeralAttribute {
+abstract class CompoundAttribute extends NumeralAttribute {
   // podría tener un accesor de las dependencias para poder
   // determinar que atributos recalcular cuando se modifica
   // X atributo
@@ -99,6 +95,10 @@ class CompoundAttribute extends NumeralAttribute {
   constructor(name: CharacterAttributeName) {
     super(name, 0);
   }
+
+  public abstract CalculateBaseValue(
+    characterAttributes: Array<NumeralAttribute>
+  ): void;
 }
 
 export class Stamina extends CompoundAttribute {
