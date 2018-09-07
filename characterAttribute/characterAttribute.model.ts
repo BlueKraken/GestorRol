@@ -1,21 +1,12 @@
-interface DisplaysValue {
+export interface DisplaysValue {
   AttributeName: string;
   ValueToString(): string;
 }
 
-abstract class CharacterAttribute implements DisplaysValue {
+export abstract class CharacterAttribute implements DisplaysValue {
   public get AttributeName() { return this.name; }
   constructor(private name: CharacterAttributeName) { }
   public abstract ValueToString(): string
-}
-
-class InformativeAttribute extends CharacterAttribute {
-  constructor(name: CharacterAttributeName, private value: string) {
-    super(name);
-  }
-  public ValueToString() {
-    return this.value;
-  }
 }
 
 export class NumeralAttribute extends CharacterAttribute {
@@ -129,7 +120,7 @@ export class AttributeBonification extends CharacterAttribute {
   }
 }
 
-type CharacterAttributeName = 
+export type CharacterAttributeName = 
   'totalHealthPoints' |
   'healthPoints' |
   'totalEnergy' |
