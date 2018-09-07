@@ -1,5 +1,6 @@
 import { CharacterAttribute, CharacterAttributeName } from "./characterAttribute.model";
 import { AttributeBonification } from "./attributeBonification.model";
+
 export class NumeralAttribute extends CharacterAttribute {
   public get TotalValue() {
     return this.value

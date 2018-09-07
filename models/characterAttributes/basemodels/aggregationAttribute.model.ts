@@ -1,14 +1,12 @@
 import { NumeralAttribute } from "./numeralAttribute.model";
+import { CharacterAttributeName } from "./characterAttribute.model";
 import { CompoundAttribute } from "./compoundAttribute.model";
-export class Stamina extends CompoundAttribute {
-  constructor() {
-    super("stamina");
-    this.attributeDependencies = ["intelligenceTests"];
+
+export class AggregationAttribute extends CompoundAttribute {
+  constructor(name: CharacterAttributeName) {
+    super(name);
   }
-  public ValueToString() {
-    return `+${this.TotalValue}`;
-  }
-  public CalculateBaseValue(characterAttributes: Array<NumeralAttribute>) {
+  public UpdateBaseValue(characterAttributes: Array<NumeralAttribute>) {
     this.value = this.attributeDependencies
       .map(name => characterAttributes
         .find(attribute => attribute.AttributeName == name)

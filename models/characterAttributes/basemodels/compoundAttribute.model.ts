@@ -22,5 +22,5 @@ export abstract class CompoundAttribute extends NumeralAttribute {
   constructor(name: CharacterAttributeName) {
     super(name, 0);
   }
-  public abstract CalculateBaseValue(characterAttributes: Array<NumeralAttribute>): void;
+  public abstract UpdateBaseValue(characterAttributes: Array<NumeralAttribute>): void;
 }

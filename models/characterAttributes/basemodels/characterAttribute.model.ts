@@ -9,6 +9,12 @@ export abstract class CharacterAttribute implements DisplaysValue {
   public abstract ValueToString(): string
 }
 
+/** 
+ * Tipo unión con los nombres para identificar a los atributos.
+ * No hay garantía de que esta sea la manera necesaria para
+ * identificar un atributo
+ */
+// FIXME: faltan (muchos) atributos
 export type CharacterAttributeName = 
   'totalHealthPoints' |
   'healthPoints' |
@@ -34,5 +40,6 @@ export type CharacterAttributeName =
   'intelligenceTests' |
   'clevernessAndDeduction' |
   'wisdomAndExperience' |
-  'charismaEloquenceDiplomacy';
+  'charismaEloquenceDiplomacy' |
+  'detectMagic';
   
