@@ -1,4 +1,13 @@
-export const chamanData = {
+export interface AttributeFromJson {
+  name: string,
+  value?: number,
+  conditionalValue?: {
+    value: number,
+    condition: string
+  }
+};
+
+export const ShamanData = {
   name: "chaman",
   initialPoints: 3,
   initialAttributes: {
