@@ -39,6 +39,7 @@ export class Character
   private characterAttributes: Array<NumeralAttribute>; 
   /** Inventario */
   public Inventory: Inventory
+  // TODO: implementar puntos de personaje
   /** 
    * Crea un nuevo personaje usando los atributos
    * iniciales de la clase y raza escogida

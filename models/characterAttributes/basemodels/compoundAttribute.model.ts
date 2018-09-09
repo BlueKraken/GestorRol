@@ -19,8 +19,8 @@ export abstract class CompoundAttribute extends NumeralAttribute {
   // determinar que atributos recalcular cuando se modifica
   // X atributo
   protected attributeDependencies: Array<CharacterAttributeName>;
-  constructor(name: CharacterAttributeName) {
-    super(name, 0);
+  constructor(name: CharacterAttributeName, value = 0) {
+    super(name, value);
   }
   public abstract UpdateBaseValue(characterAttributes: Array<NumeralAttribute>): void;
 }
