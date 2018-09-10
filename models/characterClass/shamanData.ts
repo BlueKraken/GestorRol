@@ -10,58 +10,63 @@ export interface AttributeFromJson {
 export const ShamanData = {
   name: "chaman",
   initialPoints: 3,
-  initialAttributes: {
-    baseMorale: { value: 6 },
-    actionSpeed: { value: 2 },
-    advanceBoxes: { 
+  initialAttributes: [
+    { name: 'baseMorale', value: 6 },
+    { name: 'actionSpeed', value: 2 },
+    {
+      name: 'advanceBoxes', 
       value: 1, 
-      condition: "por asalto; pasará a moverse 2 casilleros cuando se supere +3PD constante"
+      conditionalValue: {
+        value: 2,
+        condition: 'cuando se supere +3PD constante'
+      }
     },
-    energyOptionsCost: {
+    // TODO: diseñar este tipo de atributo
+    /*{ name: 'energyOptionsCost',
       value: "Agregar 5 a coste de energía en talento que ocupe tiempo, " + 
         "o 11 de energía a talento pasivo con coste o instantáneo, y " +
         "obtiene +3 ataque acumulativo por el resto de la batalla" 
-    },
-    fortitude: { value: 3 },
-    will: { value: 4 },
-    intelligenceTests: { value: 1 },
-  },
+    },*/
+    { name: 'fortitude', value: 3 },
+    { name: 'will', value: 4 },
+    { name: 'intelligenceTests', value: 1 },
+  ],
   initialRaceAttributes: {
     maon: {
-      attributes: {
-        totalEnergy: { value: 11 },
-        totalHealthPoints: { value: 14 },
-        reflexes: { value: 1 },
-        dexterityTests: { value: 3 },
-        fortitude: {
+      attributes: [
+        { name: 'totalEnergy', value: 11 },
+        { name: 'totalHealthPoints', value: 14 },
+        { name: 'reflexes', value: 1 },
+        { name: 'dexterityTests', value: 3 },
+        { name: 'fortitude',
           conditionalValue: {
             value: 5,
             condition: 'by empty hand'
           }
         },
-        strengthTests: {
+        { name: 'strengthTests',
           conditionalValue: {
             value: 8,
             condition: 'by empty hand'
           }
         }
-      },
+      ],
       notes: "El Hombre de Maón puede ocupar sólo rodela como potencial racial."
     },
     mediano: {
-      attributes: {
-        totalEnergy: { value: 23 },
-        totalHealthPoints: { value: 8 },
-        reflexes: {
+      attributes: [
+        { name: 'totalEnergy', value: 23 },
+        { name: 'totalHealthPoints', value: 8 },
+        { name: 'reflexes',
           conditionalValue: {
             value: 8,
             condition: 'by empty hand'
           },
           value: 3
         },
-        stealth: { value: 6 },
-        clevernessAndDeduction: { value: 2 },
-      },
+        { name: 'stealth', value: 6 },
+        { name: 'clevernessAndDeduction', value: 2 },
+      ],
       notes: "El Mediano puede ocupar sólo rodela como potencial racial."
     }
   },
