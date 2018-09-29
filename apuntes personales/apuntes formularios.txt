@@ -1,0 +1,59 @@
+Tipos de talento
+---
+* que tipos existen?: Talento común, Talento instantáneo o pasivo con o sin costes, Talento de ataque de arma
+* que determina?
+
+Condiciones
+---
+* de que pueden depender?
+  * estado de personaje?
+  * equipo?
+  * atributos?
+  * otro?
+
+Filtros
+---
+* Qué determina si un talento tiene afección a un atributo?
+  * si da una bonificación a este?
+  * condición sobre éste?
+  * cualquier aparición?
+
+Efectos
+---
+* los efectos de los atributos son exclusivos de ellos? es decir, un arma no puede poseer un efecto del mismo tipo que de un talento?
+* Donde se ingresan los efectos?
+
+
+Talento
+---
+tipos: TipoTalento[]
+duración: numero
+efecto: EfectoTalento[]
+condiciones: CondicionTalento[]
+clases: NombreClase[]
+costes: CoseTalento[]
+descripción: {
+  [tipoDescripción: TipoDescripcion(diccionario)]: string
+}
+características
+bonificaciones: BonificaciónTalento[]
+tipoNivelDeTalento: estadío (de 5 estadíos) | integral | expansión
+nivelTalento: (para estadío: 1-5, integral: null, expansión: 1-??)
+
+
+ej descripción: {
+  lore: Lorem ipsum...
+  venenoAcumulable: Lorem ipsum...
+  condiciónConexión: ...
+  efecto: ...
+}
+
+CosteDeTalento
+---
+tipo: tiempo | energía | otro
+coste: numero
+descripción: string
+
+BonificaciónTalento
+---
+atributo: NombreAtributo
