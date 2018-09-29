@@ -17,8 +17,9 @@ export abstract class CharacterAttribute implements DisplaysValue {
 // FIXME: faltan (muchos) atributos
 export type CharacterAttributeName = 
   'totalHealthPoints' |
-  'healthPoints' |
+  'currenthealthPoints' |
   'totalEnergy' |
+  'currentEnergy' |
   'stamina' |
   'baseMorale' |
   'connectionMorale' |
