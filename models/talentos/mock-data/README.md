@@ -1,0 +1,2 @@
+# Mock data
+Este directorio contiene la información que conocemos sobre la relación entre ciertos pares de conceptos. Refleja como estarían asociados los conceptos en el almacén de datos, pero un servidor podría entregarnos una versión agrupada, ordenada o procesada de manera más ad hoc.
