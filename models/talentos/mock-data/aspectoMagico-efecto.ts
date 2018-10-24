@@ -3,7 +3,7 @@ import { AspectoEscuelaMagica, EfectoMagico } from "../enums";
 
 /**
  * Asumo que el aspecto de la escuela es el ligado al efecto, por 
- * lo que la escuela queda implícira
+ * lo que la escuela queda implícita
  */
 export const DatosEscuelaEfectos: Array<ParAspectoMagicoEfecto> = [
     {
