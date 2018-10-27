@@ -1,4 +1,4 @@
-import { NaturalezaCoste, TiemposDeBatalla } from "./enums";
+import { NaturalezaCoste, TiemposDeBatalla, AtributoPagable } from "./enums";
 
 //export class 
 
@@ -9,27 +9,34 @@ export abstract class CosteTalento {
 export class CosteDeTiempo {
     readonly Naturaleza = NaturalezaCoste.Tiempo;
     Tipo: TiemposDeBatalla;
-    Valor: number;
+    Coste: number;
 }
 
 export class CosteDeEnergia {
     readonly Naturaleza = NaturalezaCoste.Energia;
-    Valor: number; 
+    Coste: number; 
 }
 
 export class CosteDeInversion{
    readonly Naturaleza = NaturalezaCoste.Inversion;
-   Valor: number;
+   Coste: number;
 }
 
 export class CosteDePerdida{
     readonly Naturaleza = NaturalezaCoste.Perdida;
     Tipo: TiemposDeBatalla;
-    Valor: number;
+    Coste: number;
 }
 
 export class CosteDeVida{
     readonly Naturaleza = NaturalezaCoste.Vida;
-    Valor: number;
+    Coste: number;
+}
 
+export class CosteDeAtributoPorTiempo {
+    readonly Naturaleza = NaturalezaCoste.AtributoTiempo;
+    Coste: number;
+    Atributo: AtributoPagable;
+    TipoTiempo: TiemposDeBatalla;
+    Tiempo: number;
 }
