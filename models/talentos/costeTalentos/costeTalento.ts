@@ -19,6 +19,7 @@ export class CosteDeEnergia {
 
 export class CosteDeInversion{
    readonly Naturaleza = NaturalezaCoste.Inversion;
+   Tipo: TiemposDeBatalla
    Valor: number;
 }
 
@@ -32,4 +33,9 @@ export class CosteDeVida{
     readonly Naturaleza = NaturalezaCoste.Vida;
     Valor: number;
 
+}
+
+export class CosteDeAguante{
+    readonly Naturaleza = NaturalezaCoste.Aguante;
+    Valor: number;
 }
