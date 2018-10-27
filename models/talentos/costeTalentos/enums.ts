@@ -13,3 +13,16 @@ export enum TiemposDeBatalla {
     Turno = 'turno',
     Ronda = 'ronda'
 }
+
+export enum AtributoPagable {
+    Suerte = 'suerte',
+    Iniciativa = 'iniciativa',
+    MoralPropia = 'moral propia',
+    Fortaleza = 'fortaleza',
+    PruebasFuerza = 'pruebas de fuerza',
+    Reflejos = 'reflejos',
+    PruebasDestreza = 'pruebas de destreza',
+    Voluntad = 'voluntad',
+    PruebasInteligencia = 'pruebas de inteligencia',
+
+}
